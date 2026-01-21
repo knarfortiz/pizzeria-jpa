@@ -13,7 +13,7 @@ public class PizzaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_pizza")
-    private Integer id_pizza;
+    private Integer idPizza;
 
     @Column(nullable = false, length = 30, unique = true)
     private String name;
