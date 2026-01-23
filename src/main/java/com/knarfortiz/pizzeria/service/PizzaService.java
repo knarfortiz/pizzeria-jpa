@@ -27,5 +27,13 @@ public class PizzaService {
     public PizzaEntity get(Integer id) {
         return pizzaRepository.findById(id).orElse(null);
     }
+
+    public PizzaEntity save(PizzaEntity pizzaEntity) {
+        return pizzaRepository.save(pizzaEntity);
+    }
+
+    public void delete(Integer id) {
+        pizzaRepository.deleteById(id);
+    }
 }
 

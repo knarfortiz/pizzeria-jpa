@@ -3,10 +3,8 @@ package com.knarfortiz.pizzeria.web.controller;
 import com.knarfortiz.pizzeria.persistence.entity.OrderItemEntity;
 import com.knarfortiz.pizzeria.persistence.entity.PizzaEntity;
 import com.knarfortiz.pizzeria.service.PizzaService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,17 +18,39 @@ public class PizzaController {
     }
 
     @GetMapping()
-    public List<PizzaEntity> getPizzas() {
-        return pizzaService.getAll();
+    public ResponseEntity<List<PizzaEntity>> getPizzas() {
+        return ResponseEntity.ok(pizzaService.getAll());
     }
 
     @GetMapping("/available")
-    public List<PizzaEntity> getPizzasAvailable() {
-        return pizzaService.getAvailable(true);
+    public ResponseEntity<List<PizzaEntity>> getPizzasAvailable() {
+        return ResponseEntity.ok(pizzaService.getAvailable(true));
     }
 
     @GetMapping("/{id}")
-    public PizzaEntity getPizza(@PathVariable("id") Integer id) {
-        return pizzaService.get(id);
+    public ResponseEntity<PizzaEntity> getPizza(@PathVariable("id") Integer id) {
+        return ResponseEntity.ok(pizzaService.get(id));
+    }
+
+    @PostMapping()
+    public ResponseEntity<PizzaEntity> savePizza(@RequestBody PizzaEntity pizzaEntity) {
+        if (pizzaEntity.getIdPizza() == null) {
+            return ResponseEntity.ok(pizzaService.save(pizzaEntity));
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
+    @PutMapping()
+    public ResponseEntity<PizzaEntity> updatePizza(@RequestBody PizzaEntity pizzaEntity) {
+        if (pizzaService.get(pizzaEntity.getIdPizza()) != null) {
+            return ResponseEntity.ok(pizzaService.save(pizzaEntity));
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePizza(@PathVariable("id") Integer id) {
+        pizzaService.delete(id);
+        return ResponseEntity.ok().build();
     }
 }
