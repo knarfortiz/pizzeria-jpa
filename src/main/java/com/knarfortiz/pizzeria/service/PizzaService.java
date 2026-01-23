@@ -2,8 +2,6 @@ package com.knarfortiz.pizzeria.service;
 
 import com.knarfortiz.pizzeria.persistence.entity.PizzaEntity;
 import com.knarfortiz.pizzeria.persistence.repository.PizzaRepository;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,6 +36,14 @@ public class PizzaService {
 
     public PizzaEntity getByName(String name) {
         return pizzaRepository.findByAvailableTrueAndNameIgnoreCase(name);
+    }
+
+    public List<PizzaEntity> getByDescription(String description) {
+        return pizzaRepository.findByAvailableTrueAndDescriptionContainingIgnoreCase(description);
+    }
+
+    public List<PizzaEntity> getWithOutDescription(String description) {
+        return pizzaRepository.findByAvailableTrueAndDescriptionNotContainingIgnoreCase(description);
     }
 }
 

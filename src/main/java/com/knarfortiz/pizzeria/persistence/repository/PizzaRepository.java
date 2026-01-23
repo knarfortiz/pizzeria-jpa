@@ -8,4 +8,6 @@ import java.util.List;
 public interface PizzaRepository extends CrudRepository<PizzaEntity, Integer> {
     public List<PizzaEntity> findByAvailableTrueOrderByPrice();
     public PizzaEntity findByAvailableTrueAndNameIgnoreCase(String name);
+    public List<PizzaEntity> findByAvailableTrueAndDescriptionContainingIgnoreCase(String description);
+    public List<PizzaEntity> findByAvailableTrueAndDescriptionNotContainingIgnoreCase(String description);
 }

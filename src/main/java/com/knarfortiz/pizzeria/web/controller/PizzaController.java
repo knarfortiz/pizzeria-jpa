@@ -1,6 +1,5 @@
 package com.knarfortiz.pizzeria.web.controller;
 
-import com.knarfortiz.pizzeria.persistence.entity.OrderItemEntity;
 import com.knarfortiz.pizzeria.persistence.entity.PizzaEntity;
 import com.knarfortiz.pizzeria.service.PizzaService;
 import org.springframework.http.ResponseEntity;
@@ -57,5 +56,15 @@ public class PizzaController {
     @GetMapping("/name/{name}")
     public ResponseEntity<PizzaEntity> getPizzaByName(@PathVariable("name") String name) {
         return ResponseEntity.ok(pizzaService.getByName(name));
+    }
+
+    @GetMapping("/description/{description}")
+    public ResponseEntity<List<PizzaEntity>> getPizzasByDescription(@PathVariable("description") String description) {
+        return ResponseEntity.ok(pizzaService.getByDescription(description));
+    }
+
+    @GetMapping("/without-description/{description}")
+    public ResponseEntity<List<PizzaEntity>> getPizzasWithOutDescription(@PathVariable("description") String description) {
+        return ResponseEntity.ok(pizzaService.getWithOutDescription(description));
     }
 }
