@@ -20,8 +20,8 @@ public class PizzaService {
         return (List<PizzaEntity>) pizzaRepository.findAll();
     }
 
-    public List<PizzaEntity> getAvailable(Boolean available) {
-        return pizzaRepository.findByAvailable(available);
+    public List<PizzaEntity> getAvailable() {
+        return pizzaRepository.findByAvailableTrueOrderByPrice();
     }
 
     public PizzaEntity get(Integer id) {
@@ -34,6 +34,10 @@ public class PizzaService {
 
     public void delete(Integer id) {
         pizzaRepository.deleteById(id);
+    }
+
+    public PizzaEntity getByName(String name) {
+        return pizzaRepository.findByAvailableTrueAndNameIgnoreCase(name);
     }
 }
 

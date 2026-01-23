@@ -17,14 +17,14 @@ public class PizzaController {
         this.pizzaService = pizzaService;
     }
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<PizzaEntity>> getPizzas() {
         return ResponseEntity.ok(pizzaService.getAll());
     }
 
     @GetMapping("/available")
     public ResponseEntity<List<PizzaEntity>> getPizzasAvailable() {
-        return ResponseEntity.ok(pizzaService.getAvailable(true));
+        return ResponseEntity.ok(pizzaService.getAvailable());
     }
 
     @GetMapping("/{id}")
@@ -32,7 +32,7 @@ public class PizzaController {
         return ResponseEntity.ok(pizzaService.get(id));
     }
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<PizzaEntity> savePizza(@RequestBody PizzaEntity pizzaEntity) {
         if (pizzaEntity.getIdPizza() == null) {
             return ResponseEntity.ok(pizzaService.save(pizzaEntity));
@@ -40,7 +40,7 @@ public class PizzaController {
         return ResponseEntity.badRequest().build();
     }
 
-    @PutMapping()
+    @PutMapping
     public ResponseEntity<PizzaEntity> updatePizza(@RequestBody PizzaEntity pizzaEntity) {
         if (pizzaService.get(pizzaEntity.getIdPizza()) != null) {
             return ResponseEntity.ok(pizzaService.save(pizzaEntity));
@@ -52,5 +52,10 @@ public class PizzaController {
     public ResponseEntity<Void> deletePizza(@PathVariable("id") Integer id) {
         pizzaService.delete(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/name/{name}")
+    public ResponseEntity<PizzaEntity> getPizzaByName(@PathVariable("name") String name) {
+        return ResponseEntity.ok(pizzaService.getByName(name));
     }
 }
