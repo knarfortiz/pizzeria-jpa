@@ -1,7 +1,11 @@
 package com.knarfortiz.pizzeria.service;
 
 import com.knarfortiz.pizzeria.persistence.entity.PizzaEntity;
+import com.knarfortiz.pizzeria.persistence.repository.PizzaPagSortRepository;
 import com.knarfortiz.pizzeria.persistence.repository.PizzaRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,13 +13,16 @@ import java.util.List;
 @Service
 public class PizzaService {
     private final PizzaRepository pizzaRepository;
+    private final PizzaPagSortRepository pizzaPagSortRepository;
 
-    public PizzaService(PizzaRepository pizzaRepository) {
+    public PizzaService(PizzaRepository pizzaRepository, PizzaPagSortRepository pizzaPagSortRepository) {
         this.pizzaRepository = pizzaRepository;
+        this.pizzaPagSortRepository = pizzaPagSortRepository;
     }
 
-    public List<PizzaEntity> getAll() {
-        return (List<PizzaEntity>) pizzaRepository.findAll();
+    public Page<PizzaEntity> getAll(int page, int elements) {
+        Pageable pageRequest = PageRequest.of(page, elements);
+        return pizzaPagSortRepository.findAll(pageRequest);
     }
 
     public List<PizzaEntity> getAvailable() {

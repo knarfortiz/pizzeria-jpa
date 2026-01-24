@@ -2,6 +2,7 @@ package com.knarfortiz.pizzeria.web.controller;
 
 import com.knarfortiz.pizzeria.persistence.entity.PizzaEntity;
 import com.knarfortiz.pizzeria.service.PizzaService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +18,9 @@ public class PizzaController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PizzaEntity>> getPizzas() {
-        return ResponseEntity.ok(pizzaService.getAll());
+    public ResponseEntity<Page<PizzaEntity>> getPizzas(@RequestParam(defaultValue = "0") int page,
+                                                       @RequestParam(defaultValue = "8") int elements) {
+        return ResponseEntity.ok(pizzaService.getAll(page, elements));
     }
 
     @GetMapping("/available")
