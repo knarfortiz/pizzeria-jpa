@@ -67,4 +67,9 @@ public class PizzaController {
     public ResponseEntity<List<PizzaEntity>> getPizzasWithOutDescription(@PathVariable("description") String description) {
         return ResponseEntity.ok(pizzaService.getWithOutDescription(description));
     }
+
+    @GetMapping("/cheapest/{price}")
+    public ResponseEntity<List<PizzaEntity>> getTop3ByPriceLessThanOrderByPriceAsc(@PathVariable("price") double price) {
+        return ResponseEntity.ok(pizzaService.getTop3ByPriceLessThanOrderByPriceAsc(price));
+    }
 }
